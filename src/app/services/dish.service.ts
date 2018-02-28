@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Http, Response } from '@angular/http';
 import { baseURL } from '../shared/baseurl';
 import { ProcessHttpmsgService } from './process-httpmsg.service';
+import { RestangularModule, Restangular } from 'ngx-restangular';
 
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/delay';
@@ -15,7 +16,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class DishService {
 
-  constructor(private http: Http,
+  constructor(private restangular: Restangular,
+    //private http: Http,
     private processHTTPmsgService: ProcessHttpmsgService) { }
 
   /*getDishes(): Promise<Dish[]> {
@@ -66,6 +68,7 @@ export class DishService {
     return Observable.of(DISHES.map(dish => dish.id ));
   }*/
 
+ /* http implementation
   getDishes(): Observable<Dish[]> {
     return this.http.get(baseURL + 'dishes')
                     .map(res => { return this.processHTTPmsgService.extractData(res); })
@@ -88,5 +91,25 @@ export class DishService {
     return this.getDishes()
       .map(dishes => { return dishes.map(dish => dish.id) });
      
+  }*/
+
+  getDishes(): Observable<Dish[]> {
+    return this.restangular.all('dishes').getList();
   }
+
+  getDish(id: number): Observable<Dish> {
+    return  this.restangular.one('dishes',id).get();
+  }
+
+  getFeaturedDish(): Observable<Dish> {
+    return this.restangular.all('dishes').getList({featured: true})
+      .map(dishes => dishes[0]);
+  }
+
+  getDishIds(): Observable<number[]> {
+    return this.getDishes()
+      .map(dishes => { return dishes.map(dish => dish.id) });
+      
+  }
+
 }
