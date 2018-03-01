@@ -48,17 +48,16 @@
           <span> -- {{comm.author}} {{comm.date | date}}</span>
         </p>
       </md-list-item>
+      <md-list-item *ngIf="commentForm.valid">
+        <h1 md-line> {{commentForm.get('comment').value}} </h1>
+        <p md-line>
+          <span> {{commentForm.get('rating').value}} Stars </span><br/>
+          <span> -- {{commentForm.get('author').value}} </span>
+        </p>
+    </md-list-item>
       
     </md-list>
-    <md-list>
-      <md-list-item *ngIf="commentForm.valid">
-          <h1 md-line> {{commentForm.get('comment').value}} </h1>
-          <p md-line>
-            <span> {{commentForm.get('rating').value}} Stars </span><br/>
-            <span> -- {{commentForm.get('author').value}} </span>
-          </p>
-      </md-list-item>
-    </md-list>
+    
   
   </p>
 
