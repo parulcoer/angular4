@@ -96,10 +96,10 @@
           </p>
           <button type="submit" md-button class="background-primary text-floral-white" [disabled]="feedbackForm.invalid">Submit</button>
         </form>-->
-        <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
+       <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" *ngIf="myspin"  [@expand]>
           <p>
             <md-input-container class="half-width"
-             dividerColor="{{(formErrors.firstname) ? 'warn' : 'primary'}}">
+             dividerColor="{{formErrors.firstname ? 'warn' : 'primary'}}">
               <input mdInput formControlName="firstname" placeholder="First Name" type="text" required>
               <md-hint>
                 <span [hidden]="!(formErrors.firstname)">
@@ -107,36 +107,39 @@
               </md-hint>
             </md-input-container>
             <md-input-container class="half-width"
-             dividerColor="{{(formErrors.lastname) ? 'warn' : 'primary'}}">
-              <input mdInput formControlName="lastname" placeholder="Last Name" type="text" required>
+             dividerColor="{{formErrors.lastname ? 'warn' : 'primary'}}">
+              <input mdInput formControlName="lastname" placeholder="Last Name" 
+                type="text" required>
               <md-hint>
                 <span [hidden]="!(formErrors.lastname)">
-                  {{formErrors.lastname}}</span>
+                    {{formErrors.lastname}}</span>
               </md-hint>
             </md-input-container>
           </p>
           <p>
             <md-input-container class="half-width"
-             dividerColor="{{(formErrors.telnum) ? 'warn' : 'primary'}}">
+            dividerColor="{{formErrors.telnum ? 'warn' : 'primary'}}">
               <input mdInput formControlName="telnum" placeholder="Tel. Number" type="tel" pattern="[0-9]*" required>
               <md-hint>
                 <span [hidden]="!(formErrors.telnum)">
-                  {{formErrors.telnum}}</span>
+                    {{formErrors.telnum}}</span>
               </md-hint>
             </md-input-container>
             <md-input-container class="half-width"
-             dividerColor="{{(formErrors.email) ? 'warn' : 'primary'}}">
-              <input mdInput formControlName="email" placeholder="Email" type="email" email required>
+             dividerColor="{{formErrors.email ? 'warn' : 'primary'}}">
+              <input mdInput formControlName="email" placeholder="Email" type ="email" email required>
               <md-hint>
                 <span [hidden]="!(formErrors.email)">
-                  {{formErrors.email}}</span>
+                    {{formErrors.email}}</span>
               </md-hint>
             </md-input-container>
           </p>
+          
           <table class="form-size">
             <td>
             <md-slide-toggle formControlName="agree">May we contact you?</md-slide-toggle>
             </td>
+    
             <td>
             <md-select placeholder="How?" formControlName="contacttype">
               <md-option *ngFor="let ctype of contactType" [value]="ctype">
@@ -151,5 +154,23 @@
             </md-input-container>
           </p>
           <button type="submit" md-button class="background-primary text-floral-white" [disabled]="feedbackForm.invalid">Submit</button>
-        </form>
+     </form> 
+     </div>
+     <div>
+     <div *ngIf="fbcopy" [@expand]>
+      <p>First Name:{{fbcopy.firstname}}</p>
+      <p>Last Name:{{fbcopy.lastname}}</p>
+      <p>Tel.Number:{{fbcopy.telnum}}</p>
+      <p>Email:{{fbcopy.email}}</p>
+      <p>Contact You?:{{fbcopy.agree}}</p>
+      <p>How?:{{fbcopy.contacttype}}</p>
+      <p>fbcopy:{{fbcopy.message}}</p>
+    </div>
+    <div [hidden]="myspin">
+      <div [hidden]="fbcopy" [@expand]> 
+        <md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
+      </div>
+    </div>
+    </div>
 </div>
+    
